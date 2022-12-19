@@ -105,9 +105,9 @@ jobs:
         uses: dawidd6/action-ansible-playbook@v2.6.1
         with:
 
-          playbookName: './ansible/ec2_deploy.yml'
-          keyFile: ${{secrets.SSH_PRIVATE_KEY}}
-          keyFileVaultPass: ${{secrets.VAULT_PASSWORD}}
+          playbook: './ansible/ec2_deploy.yml'
+          key: ${{secrets.SSH_PRIVATE_KEY}}
+          vault_password: ${{secrets.VAULT_PASSWORD}}
           options: |	
             --verbose
 

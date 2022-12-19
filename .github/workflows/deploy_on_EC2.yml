@@ -102,11 +102,12 @@ jobs:
         with:
           token: ${{ secrets.WORKFLOW_TOKEN}}
       - name: Run playbook
-        uses: saubermacherag/ansible-playbook-docker-action@v1.4
+        uses: dawidd6/action-ansible-playbook@v2.6.1
         with:
 
           playbookName: './ansible/ec2_deploy.yml'
           keyFile: ${{secrets.SSH_PRIVATE_KEY}}
           keyFileVaultPass: ${{secrets.VAULT_PASSWORD}}
-          verbosity: "vvv"
+          options: |	
+            --verbose
 

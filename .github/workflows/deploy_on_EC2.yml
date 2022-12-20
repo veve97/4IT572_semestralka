@@ -105,7 +105,7 @@ jobs:
       - name: prepare credentials to my VM
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > key1.pem
-          chmod 400 4IT572-DevOps.pem
+          chmod 400 key1.pem
           echo "${{ secrets.VAULT_PASSWORD }}" > vault_pass
 
       - name: Run playbook

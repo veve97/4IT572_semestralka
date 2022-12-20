@@ -96,7 +96,7 @@ jobs:
           npm run test -- --colors
 
   Deploy:
-    if: ${{ github.ref == 'refs/heads/master' }}
+    #if: ${{ github.ref == 'refs/heads/master' }}
     runs-on: ubuntu-latest
     needs: [Build, Test]
     steps:
@@ -113,6 +113,8 @@ jobs:
           rsync -avvve "ssh -oStrictHostKeyChecking=no -i key1.pem" ./key1.pem ./vault_pass ec2-user@ec2-3-92-2-159.compute-1.amazonaws.com:/home/ec2-user/4it572_ansible/
 
       - name: Run playbook
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: False
         run: |
           
           ssh -o StrictHostKeyChecking=no -i "key1.pem" ec2-user@ec2-3-92-2-159.compute-1.amazonaws.com "source .bash_profile && ansible-playbook /home/ec2-user/4it572_ansible/ansible/ec2_deploy.yml --vault-password-file /home/ec2-user/4it572_ansible/vault_pass  --user ec2-user --key-file /home/ec2-user/4it572_ansible/key1.pem"

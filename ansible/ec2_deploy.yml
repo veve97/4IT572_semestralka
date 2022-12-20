@@ -1,3 +1,14 @@
+- name: Install Boto and Boto3 libraries
+  hosts: localhost
+  connection: local
+  
+  tasks:
+    - name: Install
+      pip:
+        name: 
+          - boto
+          - boto3
+          
 - name: Deploy to EC2
   hosts: localhost
   connection: local

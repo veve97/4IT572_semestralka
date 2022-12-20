@@ -101,13 +101,15 @@ jobs:
         uses: actions/checkout@v2.5.0
         with:
           token: ${{ secrets.WORKFLOW_TOKEN}}
-      - name: Run playbook
-        uses: dawidd6/action-ansible-playbook@v2.6.1
-        with:
 
-          playbook: './ansible/ec2_deploy.yml'
-          key: ${{secrets.SSH_PRIVATE_KEY}}
-          vault_password: ${{secrets.VAULT_PASSWORD}}
-          options: |	
-            --verbose
+      - name: prepare credentials to my VM
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > key1.pem
+          chmod 400 4IT572-DevOps.pem
+          echo "${{ secrets.VAULT_PASSWORD }}" > vault_pass
+
+      - name: Run playbook
+        run: |
+          rsync -avvve "ssh -i key1.pem" ./* ec2-user@ec2-3-92-2-159.compute-1.amazonaws.com:/home/ec2-user/4it572_ansible/
+          ssh -i "key1.pem" ec2-user@ec2-3-92-2-159.compute-1.amazonaws.com "ansible-playbook /home/ec2-user/4it572_ansible/ansible/ec2_deploy.yml --vault-password-file /home/ec2-user/4it572_ansible/vault_pass  --user ec2-user --key-file ../key1.pem"
 

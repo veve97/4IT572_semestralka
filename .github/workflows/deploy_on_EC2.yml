@@ -110,6 +110,6 @@ jobs:
 
       - name: Run playbook
         run: |
-          rsync -avvve "ssh -i key1.pem" ./* ec2-user@ec2-3-92-2-159.compute-1.amazonaws.com:/home/ec2-user/4it572_ansible/
+          rsync -avvve "ssh -oStrictHostKeyChecking=no -i key1.pem" ./* ec2-user@ec2-3-92-2-159.compute-1.amazonaws.com:/home/ec2-user/4it572_ansible/
           ssh -i "key1.pem" ec2-user@ec2-3-92-2-159.compute-1.amazonaws.com "ansible-playbook /home/ec2-user/4it572_ansible/ansible/ec2_deploy.yml --vault-password-file /home/ec2-user/4it572_ansible/vault_pass  --user ec2-user --key-file ../key1.pem"
 
